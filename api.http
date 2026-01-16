@@ -1,0 +1,246 @@
+# VARIABLES
+@baseUrl_admin = http://localhost:5001
+@baseUrl_citas = http://localhost:5002
+
+@token = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoxLCJyb2wiOiJhZG1pbiIsImV4cCI6MTc2ODYxMDA1NH0.ey4xCZi658RdcFoxOgvuAvsRscsgAjBlV0d5zThOXYA
+### =========================
+### Registro de usuario (solo admin)
+### =========================
+POST {{baseUrl_admin}}/auth/register
+Authorization: Bearer {{token}}
+Content-Type: application/json
+
+{
+  "username": "Maricela",
+  "rol": "admin",
+  "password": "123456"
+}
+
+####
+
+### =========================
+### Iniciar sesión
+### =========================
+POST {{baseUrl_admin}}/auth/login
+Content-Type: application/json
+
+{
+  "username": "admin",
+  "password": "admin123"
+}
+
+### =====================================
+############################################
+# ADMIN - CENTROS MÉDICOS
+############################################
+
+### CREAR CENTRO MÉDICO
+POST {{baseUrl_admin}}/admin/centros
+Authorization: Bearer {{token}}
+Content-Type: application/json
+
+{
+  "nombre": "Clinica Americas",
+  "direccion": " Av. Americas 45"
+}
+
+### LISTAR CENTROS MÉDICOS
+GET {{baseUrl_admin}}/admin/centros
+Authorization: Bearer {{token}}
+
+### OBTENER CENTRO POR ID
+GET {{baseUrl_admin}}/admin/centros/1
+Authorization: Bearer {{token}}
+
+### ACTUALIZAR CENTRO (PATCH)
+PATCH {{baseUrl_admin}}/admin/centros/1
+Authorization: Bearer {{token}}
+Content-Type: application/json
+
+{
+  "direccion": "Nueva direccion 123"
+}
+
+### ELIMINAR CENTRO
+DELETE {{baseUrl_admin}}/admin/centros/1
+Authorization: Bearer {{token}}
+
+############################################
+# ADMIN - DOCTORES
+############################################
+
+### CREAR DOCTOR
+POST {{baseUrl_admin}}/admin/doctores
+Authorization: Bearer {{token}}
+Content-Type: application/json
+
+{
+  "nombre": "Dr Carlos Mendoza",
+  "especialidad": "Odontologia"
+}
+
+### LISTAR DOCTORES
+GET {{baseUrl_admin}}/admin/doctores
+Authorization: Bearer {{token}}
+
+### OBTENER DOCTOR POR ID
+GET {{baseUrl_admin}}/admin/doctores/1
+Authorization: Bearer {{token}}
+
+### ACTUALIZAR DOCTOR
+PATCH {{baseUrl_admin}}/admin/doctores/1
+Authorization: Bearer {{token}}
+Content-Type: application/json
+
+{
+  "especialidad": "Limpieza Dental"
+}
+
+### ELIMINAR DOCTOR
+DELETE {{baseUrl_admin}}/admin/doctores/1
+Authorization: Bearer {{token}}
+
+############################################
+# ADMIN - PACIENTES
+############################################
+
+### CREAR PACIENTE
+POST {{baseUrl_admin}}/admin/pacientes
+Authorization: Bearer {{token}}
+Content-Type: application/json
+
+{
+  "nombre": "Griselda Cruz",
+  "telefono": "5512345678"
+}
+
+### LISTAR PACIENTES
+GET {{baseUrl_admin}}/admin/pacientes
+Authorization: Bearer {{token}}
+
+### OBTENER PACIENTE POR ID
+GET {{baseUrl_admin}}/admin/pacientes/2
+Authorization: Bearer {{token}}
+
+### ACTUALIZAR PACIENTE
+PATCH {{baseUrl_admin}}/admin/pacientes/2
+Authorization: Bearer {{token}}
+Content-Type: application/json
+
+{
+  "telefono": "5598765681"
+}
+
+### ELIMINAR PACIENTE
+DELETE {{baseUrl_admin}}/admin/pacientes/1
+Authorization: Bearer {{token}}
+
+############################################
+# ADMIN - CARGA MASIVA
+############################################
+
+### CARGA MASIVA (CENTROS / DOCTORES / PACIENTES)
+POST {{baseUrl_admin}}/admin/bulk-load
+Authorization: Bearer {{token}}
+Content-Type: application/json
+
+{
+  "centros": [
+    {
+      "nombre": "Centro Norte 3",
+      "direccion": "Av. Norte 123"
+    }
+  ],
+  "doctores": [
+    {
+      "nombre": "Dr. Juan Perez 2",
+      "especialidad": "Cirugia"
+    }
+  ],
+  "pacientes": [
+    {
+      "nombre": "Luis Gomez 1",
+      "telefono": "5511223344"
+    }
+  ]
+}
+
+
+############################################
+# CITAS MÉDICAS
+############################################
+
+### CREAR CITA
+POST {{baseUrl_citas}}/citas
+Authorization: Bearer {{token}}
+Content-Type: application/json
+
+{
+  "fecha": "2026-02-16 13:00",
+  "motivo": "Odontologia dental",
+  "id_paciente": 4,
+  "id_doctor": 5,
+  "id_centro": 4
+}
+
+###
+
+### LISTAR CITAS
+# ADMIN → todas
+# SECRETARIA → por fecha
+# DOCTOR → solo las suyas
+GET {{baseUrl_citas}}/citas
+Authorization: Bearer {{token}}
+
+###
+
+### LISTAR CITAS POR FECHA
+GET {{baseUrl_citas}}/citas?fecha=2026-01-15
+Authorization: Bearer {{token}}
+
+###
+
+### LISTAR CITAS POR DOCTOR
+GET {{baseUrl_citas}}/citas?id_doctor=1
+Authorization: Bearer {{token}}
+
+###
+
+### LISTAR CITAS POR PACIENTE
+GET {{baseUrl_citas}}/citas?id_paciente=1
+Authorization: Bearer {{token}}
+
+###
+
+### LISTAR CITAS POR CENTRO
+GET {{baseUrl_citas}}/citas?id_centro=1
+Authorization: Bearer {{token}}
+
+###
+
+### LISTAR CITAS POR ESTADO
+GET {{baseUrl_citas}}/citas?estado=PENDIENTE
+Authorization: Bearer {{token}}
+
+###
+# ACTUALIZAR CITA
+# ADMIN / SECRETARIA
+PUT {{baseUrl_citas}}/citas/2
+Authorization: Bearer {{token}}
+Content-Type: application/json
+
+{
+  "fecha": "2026-10-16 13:30"
+}
+
+### CANCELAR CITA
+# ADMIN / SECRETARIA
+PATCH {{baseUrl_citas}}/citas/1/cancelar
+Authorization: Bearer {{token}}
+Content-Type: application/json
+
+###
+
+### ELIMINAR CITA
+DELETE {{baseUrl_citas}}/citas/1
+Authorization: Bearer {{token}}

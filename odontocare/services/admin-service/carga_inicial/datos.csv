@@ -1,0 +1,5 @@
+tipoCarga,tipo,username,password,nombre,especialidad,telefono,direccion
+usuario,admin,admin_csv_1,admin123456,,,,
+centro,centro,,,Centro Norte 2,,,Av. Calle 2
+doctor,doctor,,,Dr. Juan Valdez,Anestesia,,
+paciente,paciente,,,Luis Gómez,,5544556633,

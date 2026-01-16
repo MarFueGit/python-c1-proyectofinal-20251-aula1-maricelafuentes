@@ -1,0 +1,43 @@
+version: "3.9"
+
+services:
+  admin-service:
+    build: ./services/admin-service
+    container_name: admin-service
+    ports:
+      - "5001:5000"
+    environment:
+      SECRET_KEY: admin-secret
+      JWT_SECRET: admin-jwt-secret
+      DATABASE_URL: sqlite:////app/data/admin.db
+      CSV_PATH: /app/carga_inicial/datos.csv
+      ADMIN_SERVICE_URL: http://admin-service:5000
+      CITAS_SERVICE_URL: http://citas-service:5000
+    volumes:
+      - admin_data:/app/data
+    healthcheck:
+      test: ["CMD", "python", "-c", "import urllib.request; urllib.request.urlopen('http://localhost:5000/health')"]
+      interval: 10s
+      timeout: 3s
+      retries: 5
+
+  citas-service:
+    build: ./services/citas-service
+    container_name: citas-service
+    ports:
+      - "5002:5000"
+    environment:
+      SECRET_KEY: citas-secret
+      JWT_SECRET: admin-secret
+      DATABASE_URL: sqlite:////app/data/citas.db
+      CATALOG_SERVICE_URL: http://admin-service:5000
+      PACIENTES_SERVICE_URL: http://admin-service:5000
+    volumes:
+      - citas_data:/app/data
+    depends_on:
+      admin-service:
+        condition: service_healthy
+
+volumes:
+  admin_data:
+  citas_data:

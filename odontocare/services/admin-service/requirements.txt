@@ -13,3 +13,5 @@ pymongo
 flask-sqlalchemy
 PyJWT
 jsonschema
+werkzeug
+marshmallow
