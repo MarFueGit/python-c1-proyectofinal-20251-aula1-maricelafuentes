@@ -2,7 +2,7 @@
 @baseUrl_admin = http://localhost:5001
 @baseUrl_citas = http://localhost:5002
 
-@token = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoxLCJyb2wiOiJhZG1pbiIsImV4cCI6MTc2ODYxMDA1NH0.ey4xCZi658RdcFoxOgvuAvsRscsgAjBlV0d5zThOXYA
+@token = 
 ### =========================
 ### Registro de usuario (solo admin)
 ### =========================
@@ -13,7 +13,7 @@ Content-Type: application/json
 {
   "username": "Maricela",
   "rol": "admin",
-  "password": "123456"
+  "password": ""
 }
 
 ####
@@ -26,7 +26,7 @@ Content-Type: application/json
 
 {
   "username": "admin",
-  "password": "admin123"
+  "password": ""
 }
 
 ### =====================================
