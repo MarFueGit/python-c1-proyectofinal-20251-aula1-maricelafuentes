@@ -1,3 +1,10 @@
+"""
+Schemas de autenticación.
+
+Este módulo define los esquemas de validación para los procesos
+de registro y login de usuarios utilizando Marshmallow.
+"""
+
 from marshmallow import Schema, fields, validate, EXCLUDE
 
 class RegisterSchema(Schema):

@@ -4,8 +4,6 @@
 
 @token = 
 ### =========================
-### Registro de usuario (solo admin)
-### =========================
 POST {{baseUrl_admin}}/auth/register
 Authorization: Bearer {{token}}
 Content-Type: application/json
